@@ -1,8 +1,8 @@
 #ifndef ARBOL_H_
 #define ARBOL_H_
 
-#include "LinkedNode.cpp"
-#include "Node.cpp"
+#include "../src/LinkedNode.cpp"
+#include "../src/Node.cpp"
 #include <iostream>
 #include <string>
 
