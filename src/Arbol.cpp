@@ -1,4 +1,4 @@
-#include "Arbol.h"
+#include "../includes/Arbol.h"
 #include <vector>
 // PRUEBA
 void Arbol::creaArbol(const LinkedNode &nodo) {

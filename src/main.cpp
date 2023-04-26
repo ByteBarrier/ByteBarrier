@@ -1,4 +1,4 @@
-﻿#include "Arbol.h"
+﻿#include "../includes/Arbol.h"
 #include <assert.h>
 #include <cmath>
 #include <fstream>
