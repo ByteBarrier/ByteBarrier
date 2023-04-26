@@ -4,9 +4,17 @@
 # @file
 # @version 0.1
 
-all: main
+INCLUDES = -Isrc -Iincludes
+SRCDIR = src/
+SOURCES = $(SRCDIR)main.cpp $(SRCDIR)Arbol.cpp
+
+all: main clean
 
 main:
-	g++ -O2 -g main.cpp Arbol.cpp -o main.out
+	@printf "Compilando el main\n"
+	g++ -g $(SOURCES) $(INCLUDES) -o main.out
+	@printf "Completada la compilación del main\n"
 
+clean:
+	
 # end
