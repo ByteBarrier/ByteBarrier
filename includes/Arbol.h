@@ -24,7 +24,7 @@ struct Byte {
     mask = (mask << pos);
     mask = ~mask;
     valor = mask & valor;
-  }
+  } 
   void fromString(string &input) {
     valor = 0x0;
     for (int i = 0; i <= MAX_BIT && input.size() > 0; ++i) {
@@ -33,6 +33,16 @@ struct Byte {
       }
       input.erase(0, 1);
     }
+  }
+  void fromString(string &input, int & index) {
+    valor = 0x0;
+    int tam = input.size() - index;
+    for (int i = 0; i <= MAX_BIT && tam - i > 0; ++i) {
+      if (input[i+index] == '1') {
+        onBit(i);
+      }
+    }
+    index += 8;
   }
   bool getBit(const int &pos) const {
     unsigned char b = valor;

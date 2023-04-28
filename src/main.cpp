@@ -1,12 +1,27 @@
 ﻿#include "../includes/Arbol.h"
 #include <assert.h>
+#include <chrono>
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <list>
 #include <map>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 using namespace std;
+
+/*
+struct buffer{
+  char * cadena;
+  int tamanio;
+  
+  void (){
+    
+  }
+};
+*/
+
 map<int, int>::const_iterator encuentra_menor(const map<int, int> &tabla) {
   auto resultado = tabla.cbegin();
   for (auto it = tabla.cbegin(); it != tabla.cend(); ++it) {
@@ -113,12 +128,13 @@ int main(int argv, char **argc) {
       arbol.creaArbol(raiz);
 
       string nombreFichero = "output/" + outputFilename + ".zscod";
+      
+      mkdir("output/",0755);
+
       ofstream archivoSalida;
-
       archivoSalida.open(nombreFichero);
-
+      
       archivoSalida << arbol;
-
       archivoSalida.close();
 
       nombreFichero = "output/" + outputFilename + ".zsdat";
@@ -126,7 +142,7 @@ int main(int argv, char **argc) {
 
       unsigned char tamano[4];
       int tam1;
-
+      
       // Compresión de texto.
       map<char, string> codigoHuffman;
       pair<char, string> pareja;
@@ -137,18 +153,22 @@ int main(int argv, char **argc) {
         cout << "Código: " << *it << "\nLetra: " << it.getCurrentChar() << endl
              << endl;
       }
+      
       Byte byte;
       string Str = "10000000", resultado = "", resultado2;
-
+      
       byte.fromString(Str);
 
-      while (cadena.size() != 0) {
-        resultado += codigoHuffman[cadena[0]];
-        cadena.erase(0, 1);
+      int tamanio = cadena.size();
+
+      
+      for(int i = 0; i < tamanio; ++i) {
+        resultado += codigoHuffman.find(cadena[i])->second;
       }
 
+      
       tam1 = resultado.size();
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < 3; ++i) {
         tamano[i] = tam1 / pow(256, 3 - i);
         tam1 -= tamano[i] * pow(256, 3 - i);
       }
@@ -157,15 +177,24 @@ int main(int argv, char **argc) {
         //    cout << (int)tamano[i] << " ";
         archivoSalida << (unsigned char)tamano[i];
       }
+      
 
       resultado2 = resultado;
-      while (resultado2.size() != 0) {
-        byte.fromString(resultado2);
+      int indice = 0, auxiliar = resultado2.size();
+      
+      auto inicio1 = chrono::high_resolution_clock::now();
+      for(int i = 0; i < auxiliar; i+=8) {
+        byte.fromString(resultado2,indice);
         archivoSalida << byte.valor;
       }
-
+      auto final1 = chrono::high_resolution_clock::now();
+      
       archivoSalida.close();
 
+      chrono::duration<double> tiempo = final1-inicio1;
+      
+      printf("Terminada subida al archivo: %24.26f",tiempo.count());
+      
       ifstream archivoEntrada;
       archivoEntrada.open(nombreFichero);
 
@@ -193,14 +222,15 @@ int main(int argv, char **argc) {
       //  cout << result << endl;
       // Descompresión del texto.
       Node auxNodo = arbol.getRaiz();
+      int lugar = 0;
       while (tam != 0) {
         while (auxNodo.tengoHijoIzq()) {
-          if (result[0] == '1') {
+          if (result[lugar] == '1') {
             auxNodo = *(auxNodo.getHijoDer());
           } else {
             auxNodo = *(auxNodo.getHijoIzq());
           }
-          result.erase(0, 1);
+          lugar++;
           tam--;
         }
         cout << auxNodo.getCaracter();
