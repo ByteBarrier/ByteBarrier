@@ -7,7 +7,8 @@
 #include <list>
 #include <map>
 #include <string.h>
-
+#include <sys/types.h>
+#include <sys/stat.h>
 using namespace std;
 
 /*
@@ -127,12 +128,13 @@ int main(int argv, char **argc) {
       arbol.creaArbol(raiz);
 
       string nombreFichero = "output/" + outputFilename + ".zscod";
+      
+      mkdir("output/",0755);
+
       ofstream archivoSalida;
-
       archivoSalida.open(nombreFichero);
-
+      
       archivoSalida << arbol;
-
       archivoSalida.close();
 
       nombreFichero = "output/" + outputFilename + ".zsdat";
