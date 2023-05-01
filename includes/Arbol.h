@@ -126,6 +126,9 @@ class Arbol {
         ConstPreorderIterator &operator++();
         void nextnodo();
         void subir();
+        char getCurrentChar() const{
+            return this->current->getCaracter();
+        }
         inline bool operator==(const ConstPreorderIterator &other) const {
           return this->equal(other);
         }

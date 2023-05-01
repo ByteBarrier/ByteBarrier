@@ -40,3 +40,7 @@ some_file.txt
 .vscode/
 output/
 ficherosDePrueba/Prueba1GB
+main.cpp
+CMakeLists.txt
+.idea
+cmake-build-debug
