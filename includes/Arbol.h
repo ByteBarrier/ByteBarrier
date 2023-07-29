@@ -5,6 +5,7 @@
 #include "../src/Node.cpp"
 #include <iostream>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -73,6 +74,7 @@ class Arbol {
     Node raiz;
 
   public:
+    Arbol(const map<char,string> &huffman);
     inline Arbol() {}
     inline Node getRaiz() { return this->raiz; }
     friend class LinkedNode;
