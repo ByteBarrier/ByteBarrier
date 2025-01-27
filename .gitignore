@@ -44,3 +44,5 @@ main.cpp
 CMakeLists.txt
 .idea
 cmake-build-debug
+*.odt
+*.pro.user

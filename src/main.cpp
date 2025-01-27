@@ -25,6 +25,7 @@ int main(int argv, char **argc) {
             "{nombreDelFicheroDeSalida}"
             << endl;
     } else {
+        map<char, string> huffman;
         string filename = argc[1], outputFilename = argc[2];
         Arbol arbol;
 
@@ -60,10 +61,21 @@ int main(int argv, char **argc) {
 
         // Descompresión del texto.
         // Paso 1: Leer el arbol desde el archivo.
-        // NO está hecho
-        //
-        // Paso 2: Descomprimimos todo el archivo.
-        Node auxNodo = arbol.getRaiz();
+
+        archivoEntrada.close();
+
+        nombreFichero = "output/" + outputFilename + ".zscod";
+
+        archivoEntrada.open(nombreFichero);
+
+        huffman = leerHuffman(archivoEntrada);
+
+        // Falta paalsr a arbol.
+
+
+        // Paso 2: Descomprimimos el archivo.
+        Arbol arbol2(huffman);
+        Node auxNodo = arbol2.getRaiz();
         int lugar = 0;
         while (tam != 0) {
             while (auxNodo.tengoHijoIzq()) {
@@ -76,9 +88,8 @@ int main(int argv, char **argc) {
                 tam--;
             }
             cout << auxNodo.getCaracter();
-            auxNodo = arbol.getRaiz();
+            auxNodo = arbol2.getRaiz();
         }
-        cout << "\nFIn";
     }
     return 0;
 }
