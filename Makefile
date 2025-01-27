@@ -8,10 +8,7 @@ INCLUDES = -Isrc -Iincludes
 SRCDIR = src/
 SOURCES = $(SRCDIR)main.cpp $(SRCDIR)Arbol.cpp
 
-all: delete main
-
-delete:
-	rm -r main.out
+all: main clean
 
 main:
 	@printf "Compilando el main\n"
